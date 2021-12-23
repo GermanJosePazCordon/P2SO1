@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option go_package = "dataproto";
+
+package dataproto;
+
+service getData {
+    rpc returnData (requestData) returns (responseData) {}
+}
+
+message requestData {
+    string data = 1;
+}
+
+message responseData {
+    string data = 1;
+}
