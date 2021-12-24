@@ -45,5 +45,5 @@ func publish(mensaje string) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	c.Do("PUBLISH", "example", mensaje)
+	c.Do("PUBLISH", "vacunados", mensaje)
 }
