@@ -2,16 +2,19 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	pb "grpcserver/proto"
 	"log"
 	"net"
-	pb "grpcserver/proto"
-	//"time"
+	"time"
 
-	//"go.mongodb.org/mongo-driver/bson"
-	//"go.mongodb.org/mongo-driver/mongo"
-	//"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"google.golang.org/grpc"
+
+	"github.com/gomodule/redigo/redis"
 )
 
 const (
@@ -22,11 +25,19 @@ type server struct {
 	pb.UnimplementedGetDataServer
 }
 
+type Persona struct {
+	Name         string `json:"name"`
+	Location     string `json:"location"`
+	Age          int    `json:"age"`
+	Vaccine_type string `json:"vaccine_type"`
+	N_dose       string `json:"n_dose"`
+}
+
 func guardar_data(data string) {
-	/*ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	mongoclient, err := mongo.Connect(ctx, options.Client().ApplyURI("**ruta de conexión con mongo**"))
+	mongoclient, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -38,8 +49,8 @@ func guardar_data(data string) {
 
 	fmt.Println(databases)
 
-	Database := mongoclient.Database("tallerGRPC")
-	Collection := Database.Collection("comentarios")
+	Database := mongoclient.Database("vacunadosData")
+	Collection := Database.Collection("vacunados")
 
 	var bdoc interface{}
 
@@ -50,12 +61,16 @@ func guardar_data(data string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(insertResult)*/
-	fmt.Print(data)
+	fmt.Println(insertResult)
 }
 
 func (s *server) ReturnData(ctx context.Context, in *pb.RequestData) (*pb.ResponseData, error) {
 	guardar_data(in.GetData())
+	set(in.GetData())
+	mensaje := string(in.GetData())
+	var p Persona
+	json.Unmarshal([]byte(mensaje), &p)
+	sumoRango(p.Age)
 	fmt.Printf(">> Hemos recibido la data del cliente: %v\n", in.GetData())
 	return &pb.ResponseData{Data: ">> Hola Cliente, he recibido el comentario: " + in.GetData()}, nil
 }
@@ -69,5 +84,81 @@ func main() {
 	pb.RegisterGetDataServer(s, &server{})
 	if err := s.Serve(escucha); err != nil {
 		log.Fatalf("Fallo al levantar el servidor: %v", err)
+	}
+}
+
+//-------------------------------------REDIS---------------------------------------------------------------
+func set(mensaje string) {
+	conn, err := redis.Dial("tcp", ":6379")
+	if err != nil {
+		fmt.Printf("ERROR: fail initializing the redis pool: %s", err.Error())
+	}
+	a, err := conn.Do("lpush", "personas", mensaje)
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println(a)
+	}
+}
+
+func sumoRango(rango int) {
+	c, err := redis.Dial("tcp", "localhost:6379")
+	if err != nil {
+		fmt.Println(err)
+	}
+	if rango <= 17 && rango >= 12 {
+		a, err := c.Do("INCR", "rango1")
+		if err != nil {
+			fmt.Println(err)
+			fmt.Println(a)
+		}
+	}
+	if rango <= 24 && rango >= 18 {
+		a, err := c.Do("INCR", "rango2")
+		if err != nil {
+			fmt.Println(err)
+			fmt.Println(a)
+		}
+	}
+	if rango <= 29 && rango >= 25 {
+		a, err := c.Do("INCR", "rango3")
+		if err != nil {
+			fmt.Println(err)
+			fmt.Println(a)
+		}
+	}
+	if rango <= 39 && rango >= 30 {
+		a, err := c.Do("INCR", "rango4")
+		if err != nil {
+			fmt.Println(err)
+			fmt.Println(a)
+		}
+	}
+	if rango <= 49 && rango >= 40 {
+		a, err := c.Do("INCR", "rango5")
+		if err != nil {
+			fmt.Println(err)
+			fmt.Println(a)
+		}
+	}
+	if rango <= 59 && rango >= 50 {
+		a, err := c.Do("INCR", "rango6")
+		if err != nil {
+			fmt.Println(err)
+			fmt.Println(a)
+		}
+	}
+	if rango <= 69 && rango >= 60 {
+		a, err := c.Do("INCR", "rango7")
+		if err != nil {
+			fmt.Println(err)
+			fmt.Println(a)
+		}
+	}
+	if rango <= 100 && rango >= 70 {
+		a, err := c.Do("INCR", "rango8")
+		if err != nil {
+			fmt.Println(err)
+			fmt.Println(a)
+		}
 	}
 }

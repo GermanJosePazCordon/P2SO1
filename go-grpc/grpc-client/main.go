@@ -65,5 +65,5 @@ func main() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", conectar_server)
 	fmt.Println("Cliente se levanto en el puerto 8000")
-	log.Fatal(http.ListenAndServe(":8000", router))
+	log.Fatal(http.ListenAndServe(":3000", router))
 }
