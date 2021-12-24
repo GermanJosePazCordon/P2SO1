@@ -1,0 +1,75 @@
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+  <img src="https://img.icons8.com/external-wanicon-two-tone-wanicon/64/000000/external-vaccine-vaccine-development-wanicon-two-tone-wanicon.png"/>
+  <span>Covicho.info</span>
+</div>
+
+<div class="content" role="main">
+
+  <!-- Terminal -->
+  <div class="terminal">
+  </div>
+
+  <div class="row" style="width: 930px;">
+    <!-- Top 3 de áreas con mayor vacunados con esquema completo en MongoDB. -->
+    <div class="tabla-vacunados col">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">
+              Áreas con mayor vacunados con esquema completo
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>
+              Departamento
+            </th>
+            <th>
+              Vacunados
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tabla-vacunados col">
+      <table>
+        <thead>
+          <th>
+            Últimas 5 personas vacunadas
+          </th>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Gráfico circular del porcentaje de vacunados, una dosis, por departamentos, etc., en MongoDB -->
+    <div class="pie col" id="chart3">
+      <apx-chart [title]="chartOptions1['title']" [series]="chartOptions1['series']" [chart]="chartOptions1['chart']"
+        [labels]="chartOptions1['labels']" [responsive]="chartOptions1['responsive']" [plotOptions]="chartOptions1['plotOptions']"></apx-chart>
+    </div>
+
+    <!-- Gráfico circular del porcentaje de vacunados, esquema completo, por departamentos, etc., en MongoDB -->
+    <div class="pie col" id="chart1">
+      <apx-chart [title]="chartOptions3['title']" [series]="chartOptions3['series']" [chart]="chartOptions3['chart']"
+        [labels]="chartOptions3['labels']" [responsive]="chartOptions3['responsive']"></apx-chart>
+    </div>
+  </div>
+
+  <!-- Gráfico de barras de rango de edad de los vacunados en Redis -->
+  <div id="chart2">
+    <apx-chart [title]="chartOptions2['title']" [series]="chartOptions2['series']" [chart]="chartOptions2['chart']"
+      [dataLabels]="chartOptions2['dataLabels']" [plotOptions]="chartOptions2['plotOptions']"
+      [yaxis]="chartOptions2['yaxis']" [xaxis]="chartOptions2['xaxis']" [stroke]="chartOptions2['stroke']"
+      [grid]="chartOptions2['grid']" [fill]="chartOptions2['fill']"></apx-chart>
+  </div>
+
+</div>
+
+<router-outlet></router-outlet>

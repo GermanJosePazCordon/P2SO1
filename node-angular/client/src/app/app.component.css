@@ -1,0 +1,80 @@
+  .toolbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    background-color: #244966;
+    color: white;
+    font-family: sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .toolbar img {
+    margin: 0 10px;
+  }
+
+  .content {
+    display: flex;
+    margin: 20px auto 32px;
+    padding: 0 16px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .terminal {
+    position: relative;
+    width: 950px;
+    height: 200px;
+    border-radius: 6px;
+    padding: 40px 5px;
+    margin: 5px;
+    overflow: scroll;
+    background-color: rgb(5, 5, 15);
+  }
+
+  .terminal::before {
+    content: "\2022 \2022 \2022   Datos Recopilados";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 1rem;
+    background: rgb(58, 58, 58);
+    color: #c2c3c4;
+    width: 100%;
+    font-size: 1rem;
+    line-height: 0;
+    padding: 14px 0;
+    text-indent: 4px;
+  }
+  
+.pie {
+    margin: 5px;
+    padding: 5px;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+
+  #chart2 {
+    width: 930px;
+    margin: 5px;
+    padding: 0;
+    background-color: #ffff;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+
+  .tabla-vacunados {
+    margin: 5px;
+    padding: 5px;
+    color: black;
+    background-color: #ffff;
+    border-radius: 10px;
+    font-weight: bold;
+    height: auto;
+  }
