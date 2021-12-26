@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { ChartComponent } from 'ng-apexcharts'
+import { ChartComponent } from 'ng-apexcharts';
+import { SocketService } from './services/socket.service'
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,7 @@ export class AppComponent {
   public chartOptions2: Partial<any>;
   public chartOptions3: Partial<any>;
 
-  constructor() {
+  constructor(private socketService : SocketService) {
     this.chartOptions1 = {
       series: [44, 55, 13, 43, 22, 45],
       chart: {
@@ -172,5 +173,11 @@ export class AppComponent {
         }
       }
     };
+  }
+
+  ngOnInit(){
+    this.socketService.getNewMessage().subscribe((message: string) => {
+      console.log(message)
+  })
   }
 }

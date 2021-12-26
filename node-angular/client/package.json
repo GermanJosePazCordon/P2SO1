@@ -21,6 +21,7 @@
     "apexcharts": "^3.32.1",
     "ng-apexcharts": "^1.6.0",
     "rxjs": "~6.6.0",
+    "socket.io-client": "^4.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
