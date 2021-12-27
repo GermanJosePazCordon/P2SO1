@@ -8,6 +8,11 @@
 
   <!-- Terminal -->
   <div class="terminal">
+    <ul>
+      <li *ngFor="let data of recopilados">
+        {{data}}
+      </li>
+    </ul>
   </div>
 
   <div class="row" style="width: 930px;">
@@ -30,6 +35,10 @@
               Vacunados
             </th>
           </tr>
+          <tr *ngFor="let area of top_3">
+            <td>{{area['_id']}}</td>
+            <td>{{area['total']}}</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -42,7 +51,9 @@
           </th>
         </thead>
         <tbody>
-
+          <tr *ngFor="let persona of ultimos">
+            <td>{{persona['name']}}</td>
+          </tr>
         </tbody>
       </table>
     </div>

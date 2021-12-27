@@ -26,22 +26,18 @@ const io = socketio(servidor, {
         origin: "*"
     },
 });
+
+redisClient.connect();
+
 io.on('connection', socket => {
     console.log("Conectado");
 
     interval = setInterval(() => {
-        redisClient.connect();
-        redisClient.on('connect', function () {
-        console.log('redis connected');
-        });
         consultaRedis();
         consultaMongo();
         console.log(consultas)
         socket.emit("data", consultas);
-    }, 500);
-    socket.on('disconnect', () => { 
-        console.log("Desconectado");
-    });
+    }, 2000);
 });
 servidor.listen(4000, () => console.log('Server levantado en el puerto 4000'));
 
@@ -54,7 +50,8 @@ const consultaRedis = async () => {
     }
     consultas['con5'] = arr;
     //CONSULTA 6
-    arr = []
+    //arr = []
+    jsonOb = {}
     let rango = ''
     for(i = 1; i < 9; i++){
         rango = "rango" + i
@@ -62,10 +59,11 @@ const consultaRedis = async () => {
         if(res == null){
             res = 0
         }
-        arr.push(parseInt(res))
+        //arr.push(parseInt(res))
+        jsonOb[rango] = parseInt(res)
     }
-    consultas['con6'] = arr;
-    await redisClient.quit();
+    consultas['con6'] = jsonOb;
+    //await redisClient.quit();
 };
 
 function consultaMongo(){
@@ -84,7 +82,7 @@ function consultaMongo(){
           consultas['con2'] = result
         });
         //CONSULTA 3
-        var query = [{$match:{n_dose:1}},{$group:{_id:'$location', total:{$sum:1}}}]
+        var query = [{$match:{n_dose:1}},{$group:{_id:'$location', total:{$sum:1}}}, { $sort : { total : -1 } }]
         dbo.collection("vacunados").aggregate(query).toArray(function(err, result) {
           if (err) throw err;
           consultas['con3'] = result
@@ -92,7 +90,8 @@ function consultaMongo(){
         //CONSULTA 4
         var query = [
             {$match:{n_dose:2}},
-            {$group:{_id:'$location', total:{$sum:1}}}
+            {$group:{_id:'$location', total:{$sum:1}}},
+            { $sort : { total : -1 } }
             ]
         dbo.collection("vacunados").aggregate(query).toArray(function(err, result) {
           if (err) throw err;

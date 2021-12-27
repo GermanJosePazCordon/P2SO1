@@ -9,6 +9,15 @@ import { SocketService } from './services/socket.service'
 })
 export class AppComponent {
   title = 'client';
+  con_1: any[] = [];
+  recopilados: String[] = [];
+  top_3: any[] = []
+  ultimos: any[] = []
+  una_series: any[] = []
+  una_labels: any[] = []
+  completo_series: any[] = []
+  completo_labels: any[] = []
+  rangos: any[] = []
 
   @ViewChild("chart1") chart!: ChartComponent;
   @ViewChild("chart2") chart2!: ChartComponent;
@@ -17,14 +26,18 @@ export class AppComponent {
   public chartOptions2: Partial<any>;
   public chartOptions3: Partial<any>;
 
-  constructor(private socketService : SocketService) {
+
+  constructor(private socketService: SocketService) {
     this.chartOptions1 = {
-      series: [44, 55, 13, 43, 22, 45],
+      series: this.completo_series,
       chart: {
         width: 450,
-        type: "pie"
+        type: "pie",
+        animations: {
+          enabled: false
+        },
       },
-      labels: ["Team A", "Team B", "Team C", "Team D", "Team E", "Team F"],
+      labels: this.completo_labels,
       responsive: [
         {
           breakpoint: 480,
@@ -58,7 +71,10 @@ export class AppComponent {
       series: [44, 55, 13, 43, 22, 45],
       chart: {
         width: 450,
-        type: "pie"
+        type: "pie",
+        animations: {
+          enabled: false
+        }
       },
       labels: ["Team A", "Team B", "Team C", "Team D", "Team E", "Team F"],
       responsive: [
@@ -94,7 +110,7 @@ export class AppComponent {
       series: [
         {
           name: "Vacunados",
-          data: [300, 55, 41, 67, 22, 43, 21, 33]
+          data: this.rangos
         }
       ],
       chart: {
@@ -175,9 +191,67 @@ export class AppComponent {
     };
   }
 
-  ngOnInit(){
-    this.socketService.getNewMessage().subscribe((message: string) => {
-      console.log(message)
-  })
+  ngOnInit() {
+    this.socketService.getNewMessage().subscribe((message: any) => {
+
+      this.con_1 = message['con1']
+      if (this.con_1 != undefined) {
+
+        this.recopilados = []
+        for (const rec of this.con_1) {
+          this.recopilados.push(JSON.stringify(rec))
+        }
+
+        this.top_3 = []
+        let size = message['con2'].length
+        if (size > 3) {
+          size = 3
+        }
+        for (let index = 0; index < size; index++) {
+          this.top_3.push(message['con2'][index]);
+        }
+
+        this.ultimos = []
+        size = message['con5'].length
+        if (size > 5) {
+          size = 5
+        }
+        for (let index = 0; index < size; index++) {
+          this.ultimos.push(message['con5'][index]);
+        }
+
+        this.completo_series = []
+        this.completo_labels = []
+        for (let dato of message['con4']) {
+          this.completo_series.push(dato['total'])
+          this.completo_labels.push(dato['_id'])
+        }
+
+        this.chartOptions3['series'] = this.completo_series
+        this.chartOptions3['labels'] = this.completo_labels
+
+        this.una_series = []
+        this.una_labels = []
+        for (let dato of message['con3']) {
+          this.una_series.push(dato['total'])
+          this.una_labels.push(dato['_id'])
+        }
+
+        this.chartOptions1['series'] = this.una_series
+        this.chartOptions1['labels'] = this.una_labels
+
+        let rango = ''
+        this.rangos = []
+        for (let i = 1; i < 9; i++) {
+          rango = "rango" + i
+          this.rangos.push(message['con6'][rango])
+        }
+
+        this.chartOptions2['series'] = [{
+          name: "vacunados",
+          data: this.rangos
+        }];
+      }
+    })
   }
 }

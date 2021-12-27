@@ -34,6 +34,7 @@
     margin: 5px;
     overflow: scroll;
     background-color: rgb(5, 5, 15);
+    color: white;
   }
 
   .terminal::before {
