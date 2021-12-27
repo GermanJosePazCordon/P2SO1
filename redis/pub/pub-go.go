@@ -22,10 +22,10 @@ func conectar_server(wri http.ResponseWriter, req *http.Request) {
 		fmt.Println("aca entre")
 		return
 	}
-	fmt.Println("es un post")
+	//fmt.Println("es un post")
 	datos, _ := ioutil.ReadAll(req.Body)
-	fmt.Println("Respuesta del server: ")
-	fmt.Println(datos)
+	//fmt.Println("Respuesta del server: ")
+	//fmt.Println(datos)
 	json.NewEncoder(wri).Encode("Se ha almacenado la información")
 	bodyString := string(datos)
 	log.Print(bodyString)
@@ -46,4 +46,17 @@ func publish(mensaje string) {
 		fmt.Println(err)
 	}
 	c.Do("PUBLISH", "vacunados", mensaje)
+	set(mensaje)
+}
+
+func set(mensaje string) {
+	conn, err := redis.Dial("tcp", ":6379")
+	if err != nil {
+		fmt.Printf("ERROR: fail initializing the redis pool: %s", err.Error())
+	}
+	a, err := conn.Do("lpush", "personas", mensaje)
+	if err != nil {
+		fmt.Println(err)
+		fmt.Println(a)
+	}
 }

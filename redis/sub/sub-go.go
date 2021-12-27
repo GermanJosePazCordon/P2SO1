@@ -45,7 +45,7 @@ func main() {
 			//fmt.Println(string(p.Title))
 			out, _ := json.Marshal(&p)
 			fmt.Println(string(out))
-			set(mensaje)
+			//set(mensaje)
 			sumoRango(p.Age)
 			guardar_data(mensaje)
 		case redis.Subscription:
@@ -57,7 +57,7 @@ func main() {
 
 }
 
-func set(mensaje string) {
+/*func set(mensaje string) {
 	conn, err := redis.Dial("tcp", ":6379")
 	if err != nil {
 		fmt.Printf("ERROR: fail initializing the redis pool: %s", err.Error())
@@ -67,118 +67,50 @@ func set(mensaje string) {
 		fmt.Println(err)
 		fmt.Println(a)
 	}
-}
-/*
-func inicioRangos() {
-	conn, err := redis.Dial("tcp", ":6379")
-	if err != nil {
-		fmt.Printf("ERROR: fail initializing the redis pool: %s", err.Error())
-	}
-	a, err := conn.Do("SET", "rango1", "0")
-	if err != nil {
-		fmt.Println(err)
-		fmt.Println(a)
-	}
-	b, err := conn.Do("SET", "rango2", "0")
-	if err != nil {
-		fmt.Println(err)
-		fmt.Println(b)
-	}
-	c, err := conn.Do("SET", "rango3", "0")
-	if err != nil {
-		fmt.Println(err)
-		fmt.Println(c)
-	}
-	d, err := conn.Do("SET", "rango4", "0")
-	if err != nil {
-		fmt.Println(err)
-		fmt.Println(d)
-	}
-	e, err := conn.Do("SET", "rango5", "0")
-	if err != nil {
-		fmt.Println(err)
-		fmt.Println(e)
-	}
-	f, err := conn.Do("SET", "rango6", "0")
-	if err != nil {
-		fmt.Println(err)
-		fmt.Println(f)
-	}
-	g, err := conn.Do("SET", "rango7", "0")
-	if err != nil {
-		fmt.Println(err)
-		fmt.Println(g)
-	}
-	h, err := conn.Do("SET", "rango8", "0")
-	if err != nil {
-		fmt.Println(err)
-		fmt.Println(h)
-	}
-}
-*/
+}*/
+
 func sumoRango(rango int) {
 	c, err := redis.Dial("tcp", "localhost:6379")
 	if err != nil {
 		fmt.Println(err)
 	}
-	if rango <= 17 && rango >= 12 {
+	if rango <= 11 && rango >= 0 {
 		a, err := c.Do("INCR", "rango1")
 		if err != nil {
 			fmt.Println(err)
 			fmt.Println(a)
 		}
 	}
-	if rango <= 24 && rango >= 18 {
+	if rango <= 18 && rango >= 12 {
 		a, err := c.Do("INCR", "rango2")
 		if err != nil {
 			fmt.Println(err)
 			fmt.Println(a)
 		}
 	}
-	if rango <= 29 && rango >= 25 {
+	if rango <= 26 && rango >= 19 {
 		a, err := c.Do("INCR", "rango3")
 		if err != nil {
 			fmt.Println(err)
 			fmt.Println(a)
 		}
 	}
-	if rango <= 39 && rango >= 30 {
+	if rango <= 59 && rango >= 27 {
 		a, err := c.Do("INCR", "rango4")
 		if err != nil {
 			fmt.Println(err)
 			fmt.Println(a)
 		}
 	}
-	if rango <= 49 && rango >= 40 {
+	if rango >= 60 {
 		a, err := c.Do("INCR", "rango5")
 		if err != nil {
 			fmt.Println(err)
 			fmt.Println(a)
 		}
 	}
-	if rango <= 59 && rango >= 50 {
-		a, err := c.Do("INCR", "rango6")
-		if err != nil {
-			fmt.Println(err)
-			fmt.Println(a)
-		}
-	}
-	if rango <= 69 && rango >= 60 {
-		a, err := c.Do("INCR", "rango7")
-		if err != nil {
-			fmt.Println(err)
-			fmt.Println(a)
-		}
-	}
-	if rango <= 100 && rango >= 70 {
-		a, err := c.Do("INCR", "rango8")
-		if err != nil {
-			fmt.Println(err)
-			fmt.Println(a)
-		}
-	}
+	fmt.Println("----------------------")
 }
-
 
 //--------------------------------------------MONGO------------------------------------------------------------------
 func guardar_data(data string) {
