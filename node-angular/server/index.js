@@ -53,7 +53,7 @@ const consultaRedis = async () => {
     //arr = []
     jsonOb = {}
     let rango = ''
-    for(i = 1; i < 9; i++){
+    for(i = 1; i < 6; i++){
         rango = "rango" + i
         res = await redisClient.get(rango)
         if(res == null){

@@ -105,60 +105,40 @@ func sumoRango(rango int) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	if rango <= 17 && rango >= 12 {
+	if rango <= 11 && rango >= 0 {
 		a, err := c.Do("INCR", "rango1")
 		if err != nil {
 			fmt.Println(err)
 			fmt.Println(a)
 		}
 	}
-	if rango <= 24 && rango >= 18 {
+	if rango <= 18 && rango >= 12 {
 		a, err := c.Do("INCR", "rango2")
 		if err != nil {
 			fmt.Println(err)
 			fmt.Println(a)
 		}
 	}
-	if rango <= 29 && rango >= 25 {
+	if rango <= 26 && rango >= 19 {
 		a, err := c.Do("INCR", "rango3")
 		if err != nil {
 			fmt.Println(err)
 			fmt.Println(a)
 		}
 	}
-	if rango <= 39 && rango >= 30 {
+	if rango <= 59 && rango >= 27 {
 		a, err := c.Do("INCR", "rango4")
 		if err != nil {
 			fmt.Println(err)
 			fmt.Println(a)
 		}
 	}
-	if rango <= 49 && rango >= 40 {
+	if rango >= 60 {
 		a, err := c.Do("INCR", "rango5")
 		if err != nil {
 			fmt.Println(err)
 			fmt.Println(a)
 		}
 	}
-	if rango <= 59 && rango >= 50 {
-		a, err := c.Do("INCR", "rango6")
-		if err != nil {
-			fmt.Println(err)
-			fmt.Println(a)
-		}
-	}
-	if rango <= 69 && rango >= 60 {
-		a, err := c.Do("INCR", "rango7")
-		if err != nil {
-			fmt.Println(err)
-			fmt.Println(a)
-		}
-	}
-	if rango <= 100 && rango >= 70 {
-		a, err := c.Do("INCR", "rango8")
-		if err != nil {
-			fmt.Println(err)
-			fmt.Println(a)
-		}
-	}
+
 }
