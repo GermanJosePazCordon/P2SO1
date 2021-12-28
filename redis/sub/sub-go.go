@@ -23,9 +23,13 @@ type Persona struct {
 	N_dose       string `json:"n_dose"`
 }
 
+const (
+	url = "redis://miguelesdb@34.125.174.190:6379"
+)
+
 func main() {
 
-	c, err := redis.Dial("tcp", "localhost:6379")
+	c, err := redis.DialURL(url)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -58,7 +62,7 @@ func main() {
 }
 
 /*func set(mensaje string) {
-	conn, err := redis.Dial("tcp", ":6379")
+	conn, err := redis.DialURL( ":6379")
 	if err != nil {
 		fmt.Printf("ERROR: fail initializing the redis pool: %s", err.Error())
 	}
@@ -70,7 +74,7 @@ func main() {
 }*/
 
 func sumoRango(rango int) {
-	c, err := redis.Dial("tcp", "localhost:6379")
+	c, err := redis.DialURL(url)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -117,7 +121,7 @@ func guardar_data(data string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	mongoclient, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
+	mongoclient, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://miel:miguelesdb@34.125.174.190:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"))
 	if err != nil {
 		log.Fatal(err)
 	}

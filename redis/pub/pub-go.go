@@ -12,6 +12,10 @@ import (
 	"github.com/gorilla/mux"
 )
 
+const (
+	url = "redis://miguelesdb@34.125.174.190:6379"
+)
+
 func conectar_server(wri http.ResponseWriter, req *http.Request) {
 	wri.Header().Set("Access-Control-Allow-Origin", "*")
 	wri.Header().Set("Access-Control-Allow-Headers", "Content-Type")
@@ -41,7 +45,7 @@ func main() {
 }
 
 func publish(mensaje string) {
-	c, err := redis.Dial("tcp", "localhost:6379")
+	c, err := redis.DialURL(url)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -50,7 +54,7 @@ func publish(mensaje string) {
 }
 
 func set(mensaje string) {
-	conn, err := redis.Dial("tcp", ":6379")
+	conn, err := redis.DialURL(url)
 	if err != nil {
 		fmt.Printf("ERROR: fail initializing the redis pool: %s", err.Error())
 	}

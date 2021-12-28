@@ -159,14 +159,11 @@ export class AppComponent {
           rotate: -45
         },
         categories: [
-          "12-17",
-          "18-24",
-          "25-29",
-          "30-39",
-          "40-49",
-          "50-59",
-          "60-69",
-          "70+"
+          "0-11",
+          "12-18",
+          "19-26",
+          "27-59",
+          "60+"
         ],
         tickPlacement: "on"
       },
@@ -242,7 +239,7 @@ export class AppComponent {
 
         let rango = ''
         this.rangos = []
-        for (let i = 1; i < 9; i++) {
+        for (let i = 1; i < 6; i++) {
           rango = "rango" + i
           this.rangos.push(message['con6'][rango])
         }

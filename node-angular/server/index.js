@@ -1,10 +1,16 @@
 const express = require('express');
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017';
+const url = 'mongodb://miel:miguelesdb@34.125.174.190:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false';
 const redis =  require('redis');
-const REDIS_PORT = process.env.PORT || 6379;
-const redisClient = redis.createClient(REDIS_PORT);
+const redisClient = redis.createClient({
+    url: "redis://miguelesdb@34.125.174.190:6379"
+});
+redisClient.auth('miguelesdb');
+redisClient.connect();
+redisClient.on("connect", function () {
+    console.log("redis connected");
+  });
 const http = require('http');
 const socketio =  require('socket.io');
 const cors = require('cors');
@@ -21,13 +27,12 @@ const consultas = {
 }
 
 app.use(cors());
+
 const io = socketio(servidor, {
     cors: {
         origin: "*"
     },
 });
-
-redisClient.connect();
 
 io.on('connection', socket => {
     console.log("Conectado");
@@ -39,7 +44,6 @@ io.on('connection', socket => {
         socket.emit("data", consultas);
     }, 2000);
 });
-servidor.listen(4000, () => console.log('Server levantado en el puerto 4000'));
 
 const consultaRedis = async () => {
     //CONSULTA 5
@@ -50,7 +54,6 @@ const consultaRedis = async () => {
     }
     consultas['con5'] = arr;
     //CONSULTA 6
-    //arr = []
     jsonOb = {}
     let rango = ''
     for(i = 1; i < 6; i++){
@@ -59,7 +62,6 @@ const consultaRedis = async () => {
         if(res == null){
             res = 0
         }
-        //arr.push(parseInt(res))
         jsonOb[rango] = parseInt(res)
     }
     consultas['con6'] = jsonOb;
@@ -100,3 +102,5 @@ function consultaMongo(){
         });
     });
 }
+
+servidor.listen(4000, () => console.log('Server levantado en el puerto 4000'));
