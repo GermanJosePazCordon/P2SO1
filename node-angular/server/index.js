@@ -2,20 +2,24 @@ const express = require('express');
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://miel:miguelesdb@34.125.174.190:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false';
-const redis =  require('redis');
-const redisClient = redis.createClient({
-    url: "redis://miguelesdb@34.125.174.190:6379"
-});
-redisClient.auth('miguelesdb');
-redisClient.connect();
-redisClient.on("connect", function () {
-    console.log("redis connected");
-  });
+
+
 const http = require('http');
 const socketio =  require('socket.io');
 const cors = require('cors');
 const servidor = http.createServer(app);
 const port = process.env.PORT || 4000;
+
+//----------Configuracion de redis --------
+const redis =  require('redis');
+const REDIS_PORT = 6379;
+const REDIS_HOST = "34.125.174.190" 
+const REDIS_PASSWORD = "miguelesdb"
+const redisClient = redis.createClient({
+    url: `redis://:${REDIS_PASSWORD}@${REDIS_HOST}:${REDIS_PORT}`
+});
+redisClient.connect();
+//----------------------------------------------------
 
 const consultas = {
     'con1' : '',
@@ -39,6 +43,10 @@ io.on('connection', socket => {
 
     interval = setInterval(() => {
         consultaRedis();
+        client.get('rango1', (err, reply) => {
+            if (err) throw err;
+            console.log(reply);
+        });
         consultaMongo();
         console.log(consultas)
         socket.emit("data", consultas);
@@ -67,6 +75,8 @@ const consultaRedis = async () => {
     consultas['con6'] = jsonOb;
     //await redisClient.quit();
 };
+
+
 
 function consultaMongo(){
     MongoClient.connect(url, function(err, db) {
