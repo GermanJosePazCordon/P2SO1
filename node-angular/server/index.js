@@ -39,16 +39,9 @@ const io = socketio(servidor, {
 });
 
 io.on('connection', socket => {
-    console.log("Conectado");
-
     interval = setInterval(() => {
         consultaRedis();
-        client.get('rango1', (err, reply) => {
-            if (err) throw err;
-            console.log(reply);
-        });
         consultaMongo();
-        console.log(consultas)
         socket.emit("data", consultas);
     }, 2000);
 });

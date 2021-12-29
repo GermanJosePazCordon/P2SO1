@@ -68,7 +68,7 @@ export class AppComponent {
     };
 
     this.chartOptions3 = {
-      series: [44, 55, 13, 43, 22, 45],
+      series: this.una_series,
       chart: {
         width: 450,
         type: "pie",
@@ -76,7 +76,7 @@ export class AppComponent {
           enabled: false
         }
       },
-      labels: ["Team A", "Team B", "Team C", "Team D", "Team E", "Team F"],
+      labels: this.una_labels,
       responsive: [
         {
           breakpoint: 480,
