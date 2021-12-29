@@ -18,7 +18,7 @@ import (
 )
 
 const (
-	port = ":50051"
+	port = ":5000"
 	url  = "redis://miguelesdb@34.125.174.190:6379"
 )
 

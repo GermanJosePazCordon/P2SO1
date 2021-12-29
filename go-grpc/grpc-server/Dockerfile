@@ -1,15 +1,10 @@
-# syntax=docker/dockerfile:1
+FROM golang:latest
 
-FROM golang:1.17-alpine
+WORKDIR /
+COPY . .
 
-WORKDIR /app
-
-COPY go.mod ./
-COPY go.sum ./
 RUN go mod download
 
-COPY *.go ./
-
-EXPOSE 5051
+EXPOSE 5000
 
 CMD ["go", "run", "main.go"]
