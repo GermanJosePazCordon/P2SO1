@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	address = ":5000"
+	address = "grpc-server:5000"
 )
 
 func conectar_server(wri http.ResponseWriter, req *http.Request) {
