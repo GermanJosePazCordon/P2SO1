@@ -10,7 +10,7 @@ export class SocketService {
   public message$: BehaviorSubject<string> = new BehaviorSubject('');
   constructor() {}
 
-  socket = io('http://localhost:4000');
+  socket = io('172.17.0.2:4000');
 
   public getNewMessage = () => {
     this.socket.on('data', (message) =>{
