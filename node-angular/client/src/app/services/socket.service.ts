@@ -10,7 +10,7 @@ export class SocketService {
   public message$: BehaviorSubject<string> = new BehaviorSubject('');
   constructor() {}
 
-  socket = io('104.197.181.222:4000');
+  socket = io('34.68.131.49:4000');
 
   public getNewMessage = () => {
     this.socket.on('data', (message) =>{

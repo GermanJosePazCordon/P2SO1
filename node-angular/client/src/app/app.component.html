@@ -12,8 +12,16 @@
   <div class="row" style="margin: 15px 0px 0px 0px;">
     <div class="col-md-1">
     </div>
-    <div class="col-md-3 terminaltop">
+    <div class="col-md-10 terminaltop">
       Datos Recopilados (MongoDB)
+    </div>
+    <div class="col-md-1">
+    </div>
+  </div>
+  <div class="row" style="margin: 0px 0px 0px 0px;">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-3 terminaltop">
     </div>
     <div class="col-md-4 terminaltop" style="text-align: center;">
       {{clock}}
@@ -78,17 +86,17 @@
             </tr>
           </thead>
           <tbody>
-            <tr style="border-bottom: dashed black;">
-              <th>
+            <tr style="border-bottom: dashed black; padding: 5px 15px;">
+              <th style="border-right: dashed black; padding: 5px 15px;">
                 Departamento
               </th>
-              <th>
+              <th style="padding: 5px 15px;">
                 Vacunados
               </th>
             </tr>
             <tr *ngFor="let area of top_3">
-              <td>{{area['_id']}}</td>
-              <td>{{area['total']}}</td>
+              <td style="border-right: dashed black; padding: 5px 15px;">{{area['_id']}}</td>
+              <td style="padding: 5px 15px;">{{area['total']}}</td>
             </tr>
           </tbody>
         </table>
@@ -104,20 +112,20 @@
           </thead>
           <tbody>
             <tr style="border-bottom: dashed black;">
-              <th>
+              <th style=" padding: 5px 15px; border-right: dashed black;">
                 Nombre
               </th>
-              <th>
+              <th style=" padding: 5px 15px; border-right: dashed black;">
                 Vacuna
               </th>
-              <th>
+              <th  style="padding: 5px 15px;">
                 Dosis
               </th>
             </tr>
             <tr *ngFor="let persona of ultimos">
-              <td>{{persona['name']}}</td>
-              <td>{{persona['vaccine_type']}}</td>
-              <td>{{persona['n_dose']}}</td>
+              <td style=" padding: 5px 15px; border-right: dashed black;">{{persona['name']}}</td>
+              <td style=" padding: 5px 15px; border-right: dashed black;">{{persona['vaccine_type']}}</td>
+              <td style=" padding: 5px 15px;">{{persona['n_dose']}}</td>
             </tr>
           </tbody>
         </table>

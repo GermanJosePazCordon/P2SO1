@@ -42,19 +42,6 @@ export class AppComponent {
         },
       },
       labels: this.completo_labels,
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: "bottom"
-            }
-          }
-        }
-      ],
       title: {
         text: "Porcentaje de vacunados por departamento (una dosis)",
         align: 'center',
@@ -81,19 +68,6 @@ export class AppComponent {
         }
       },
       labels: this.una_labels,
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200
-            },
-            legend: {
-              position: "bottom"
-            }
-          }
-        }
-      ],
       title: {
         text: "Porcentaje de vacunados por departamento (esquema completo)",
         align: 'center',
@@ -118,7 +92,7 @@ export class AppComponent {
         }
       ],
       chart: {
-        height: 500,
+        height: 400,
         type: "bar",
         toolbar: {
           show: false
