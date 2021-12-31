@@ -27,7 +27,7 @@ func conectar_server(wri http.ResponseWriter, req *http.Request) {
 
 	if req.Method == "GET" {
 		wri.WriteHeader(http.StatusOK)
-		wri.Write([]byte("{\"mensaje\": \"ok\"}"))
+		wri.Write([]byte("{\"mensaje\": \"ok green\"}"))
 		return
 	}
 	datos, _ := ioutil.ReadAll(req.Body)
@@ -52,7 +52,7 @@ func conectar_server(wri http.ResponseWriter, req *http.Request) {
 		log.Fatalf("No se puede retornar la información :c (%v)", err)
 	}
 	log.Printf("Respuesta del server: %s\n", ret.GetData())
-	json.NewEncoder(wri).Encode("Se ha almacenado la información")
+	json.NewEncoder(wri).Encode("green deployment")
 }
 
 func main() {

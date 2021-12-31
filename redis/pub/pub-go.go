@@ -22,7 +22,7 @@ func conectar_server(wri http.ResponseWriter, req *http.Request) {
 	wri.Header().Set("Content-Type", "application/json")
 	if req.Method == "GET" {
 		wri.WriteHeader(http.StatusOK)
-		wri.Write([]byte("{\"mensaje\": \"ok\"}"))
+		wri.Write([]byte("{\"mensaje\": \"ok blue\"}"))
 		fmt.Println("aca entre")
 		return
 	}
@@ -30,7 +30,7 @@ func conectar_server(wri http.ResponseWriter, req *http.Request) {
 	datos, _ := ioutil.ReadAll(req.Body)
 	//fmt.Println("Respuesta del server: ")
 	//fmt.Println(datos)
-	json.NewEncoder(wri).Encode("Se ha almacenado la información")
+	json.NewEncoder(wri).Encode("blue deployment")
 	bodyString := string(datos)
 	log.Print(bodyString)
 	publish(bodyString)
