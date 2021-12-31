@@ -10,14 +10,18 @@ import { SocketService } from './services/socket.service'
 export class AppComponent {
   title = 'client';
   con_1: any[] = [];
-  recopilados: String[] = [];
+  recopilados: any[] = [];
   top_3: any[] = []
   ultimos: any[] = []
   una_series: any[] = []
   una_labels: any[] = []
   completo_series: any[] = []
   completo_labels: any[] = []
-  rangos: any[] = []
+  total_una = 0
+  total_completo = 0
+  rangos: any[] = [0, 0, 0, 0, 0]
+  clockHandle: any;
+  clock = ''
 
   @ViewChild("chart1") chart!: ChartComponent;
   @ViewChild("chart2") chart2!: ChartComponent;
@@ -31,7 +35,7 @@ export class AppComponent {
     this.chartOptions1 = {
       series: this.completo_series,
       chart: {
-        width: 450,
+        //width: 450,
         type: "pie",
         animations: {
           enabled: false
@@ -70,7 +74,7 @@ export class AppComponent {
     this.chartOptions3 = {
       series: this.una_series,
       chart: {
-        width: 450,
+        //width: 450,
         type: "pie",
         animations: {
           enabled: false
@@ -114,18 +118,23 @@ export class AppComponent {
         }
       ],
       chart: {
-        height: 350,
+        height: 500,
         type: "bar",
         toolbar: {
           show: false
         },
+        animations: {
+          enabled: false
+        },
       },
       plotOptions: {
-        bar: {
-          columnWidth: "50%",
-          endingShape: "rounded"
-        }
-      },
+            bar: {
+                borderRadius: 10,
+                dataLabels: {
+                    position: 'top', 
+                },
+            },
+        },
       dataLabels: {
         enabled: false
       },
@@ -172,32 +181,22 @@ export class AppComponent {
           text: "Cantidad de Vacunados"
         }
       },
-      fill: {
-        type: "gradient",
-        gradient: {
-          shade: "light",
-          type: "horizontal",
-          shadeIntensity: 0.25,
-          gradientToColors: undefined,
-          inverseColors: true,
-          opacityFrom: 0.85,
-          opacityTo: 0.85,
-          stops: [50, 0, 100]
-        }
-      }
+
     };
   }
 
   ngOnInit() {
+    this.clockHandle = setInterval(() => {
+      this.clock = new Date().toLocaleString();
+    }, 1000);
+
     this.socketService.getNewMessage().subscribe((message: any) => {
 
       this.con_1 = message['con1']
       if (this.con_1 != undefined) {
 
         this.recopilados = []
-        for (const rec of this.con_1) {
-          this.recopilados.push(JSON.stringify(rec))
-        }
+        this.recopilados = message['con1']
 
         this.top_3 = []
         let size = message['con2'].length
@@ -217,31 +216,44 @@ export class AppComponent {
           this.ultimos.push(message['con5'][index]);
         }
 
+        for (let dato of message['con4']) {
+          this.total_completo += dato['total']
+        }
+
         this.completo_series = []
         this.completo_labels = []
         for (let dato of message['con4']) {
           this.completo_series.push(dato['total'])
-          this.completo_labels.push(dato['_id'])
+          let porc = dato['total'] * 100 / this.total_completo
+          this.completo_labels.push(dato['_id'] + " [" + porc.toFixed(1) + "%]")
         }
+
+        this.total_completo = 0
 
         this.chartOptions3['series'] = this.completo_series
         this.chartOptions3['labels'] = this.completo_labels
+
+        for (let dato of message['con3']) {
+          this.total_una += dato['total']
+        }
 
         this.una_series = []
         this.una_labels = []
         for (let dato of message['con3']) {
           this.una_series.push(dato['total'])
-          this.una_labels.push(dato['_id'])
+          let porc = dato['total'] * 100 / this.total_una
+          this.una_labels.push(dato['_id'] + " [" + porc.toFixed(1) + "%]")
         }
+
+        this.total_una = 0
 
         this.chartOptions1['series'] = this.una_series
         this.chartOptions1['labels'] = this.una_labels
 
         let rango = ''
-        this.rangos = []
         for (let i = 1; i < 6; i++) {
           rango = "rango" + i
-          this.rangos.push(message['con6'][rango])
+          this.rangos[i - 1] = message['con6'][rango]
         }
 
         this.chartOptions2['series'] = [{

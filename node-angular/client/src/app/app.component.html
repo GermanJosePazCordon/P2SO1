@@ -1,86 +1,166 @@
-<!-- Toolbar -->
-<div class="toolbar" role="banner">
-  <img src="https://img.icons8.com/external-wanicon-two-tone-wanicon/64/000000/external-vaccine-vaccine-development-wanicon-two-tone-wanicon.png"/>
-  <span>coviddata.live</span>
-</div>
-
-<div class="content" role="main">
-
-  <!-- Terminal -->
-  <div class="terminal">
-    <ul>
-      <li *ngFor="let data of recopilados">
-        {{data}}
-      </li>
-    </ul>
-  </div>
-
-  <div class="row" style="width: 930px;">
-    <!-- Top 3 de áreas con mayor vacunados con esquema completo en MongoDB. -->
-    <div class="tabla-vacunados col">
-      <table>
-        <thead>
-          <tr>
-            <th colspan="2">
-              Áreas con mayor vacunados con esquema completo
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th>
-              Departamento
-            </th>
-            <th>
-              Vacunados
-            </th>
-          </tr>
-          <tr *ngFor="let area of top_3">
-            <td>{{area['_id']}}</td>
-            <td>{{area['total']}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="tabla-vacunados col">
-      <table>
-        <thead>
-          <th>
-            Últimas 5 personas vacunadas
-          </th>
-        </thead>
-        <tbody>
-          <tr *ngFor="let persona of ultimos">
-            <td>{{persona['name']}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
+<div class="container-fluid">
   <div class="row">
-    <!-- Gráfico circular del porcentaje de vacunados, una dosis, por departamentos, etc., en MongoDB -->
-    <div class="pie col" id="chart3">
-      <apx-chart [title]="chartOptions1['title']" [series]="chartOptions1['series']" [chart]="chartOptions1['chart']"
-        [labels]="chartOptions1['labels']" [responsive]="chartOptions1['responsive']" [plotOptions]="chartOptions1['plotOptions']"></apx-chart>
-    </div>
-
-    <!-- Gráfico circular del porcentaje de vacunados, esquema completo, por departamentos, etc., en MongoDB -->
-    <div class="pie col" id="chart1">
-      <apx-chart [title]="chartOptions3['title']" [series]="chartOptions3['series']" [chart]="chartOptions3['chart']"
-        [labels]="chartOptions3['labels']" [responsive]="chartOptions3['responsive']"></apx-chart>
+    <div class="col-md-12">
+      <!-- Toolbar -->
+      <div class="toolbar" role="banner">
+        <img
+          src="https://img.icons8.com/external-wanicon-two-tone-wanicon/64/000000/external-vaccine-vaccine-development-wanicon-two-tone-wanicon.png" />
+        <span>coviddata.live</span>
+      </div>
     </div>
   </div>
-
-  <!-- Gráfico de barras de rango de edad de los vacunados en Redis -->
-  <div id="chart2">
-    <apx-chart [title]="chartOptions2['title']" [series]="chartOptions2['series']" [chart]="chartOptions2['chart']"
-      [dataLabels]="chartOptions2['dataLabels']" [plotOptions]="chartOptions2['plotOptions']"
-      [yaxis]="chartOptions2['yaxis']" [xaxis]="chartOptions2['xaxis']" [stroke]="chartOptions2['stroke']"
-      [grid]="chartOptions2['grid']" [fill]="chartOptions2['fill']"></apx-chart>
+  <div class="row" style="margin: 15px 0px 0px 0px;">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-3 terminaltop">
+      Datos Recopilados (MongoDB)
+    </div>
+    <div class="col-md-4 terminaltop" style="text-align: center;">
+      {{clock}}
+    </div>
+    <div class="col-md-3 terminaltop" style="text-align: right;">
+    </div>
+    <div class="col-md-1">
+    </div>
   </div>
-
+  <div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10" style="margin: 0px 0px 10px 0px;">
+      <!-- Terminal -->
+      <div class="terminal">
+        <div>
+          <table style="margin: auto;">
+            <tbody>
+              <tr>
+                <th style="border: dashed white 1px; padding: 5px 10px; min-width: 30%;">
+                  Nombre
+                </th>
+                <th style="border: dashed white 1px; padding: 5px 10px; min-width: 30%;">
+                  Ubicacion
+                </th>
+                <th style="border: dashed white 1px; padding: 5px 10px; min-width: 30%;">
+                  Tipo
+                </th>
+                <th style="border: dashed white 1px; padding: 5px 10px; min-width: 30%;">
+                  Edad
+                </th>
+                <th style="border: dashed white 1px; padding: 5px 10px; min-width: 30%;">
+                  Dosis
+                </th>
+              </tr>
+              <tr *ngFor="let vacunado of recopilados">
+                <td style="border: dashed white 1px; padding: 5px 10px;">{{vacunado['name']}}</td>
+                <td style="border: dashed white 1px; padding: 5px 10px;">{{vacunado['location']}}</td>
+                <td style="border: dashed white 1px; padding: 5px 10px;">{{vacunado['vaccine_type']}}</td>
+                <td style="border: dashed white 1px; padding: 5px 10px;">{{vacunado['age']}}</td>
+                <td style="border: dashed white 1px; padding: 5px 10px;">{{vacunado['n_dose']}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-5" style="margin: 10px 0px;">
+      <div class="tabla-vacunados">
+        <table style="margin: auto; min-width: 80%;">
+          <thead>
+            <tr>
+              <th colspan="2" style="text-align: center; border-bottom: dashed black;">
+                Áreas con mayor vacunados con esquema completo
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: dashed black;">
+              <th>
+                Departamento
+              </th>
+              <th>
+                Vacunados
+              </th>
+            </tr>
+            <tr *ngFor="let area of top_3">
+              <td>{{area['_id']}}</td>
+              <td>{{area['total']}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-5" style="margin: 10px 0px;">
+      <div class="tabla-vacunados">
+        <table style="margin: auto; min-width: 80%;">
+          <thead>
+            <th colspan="3" style="text-align: center; border-bottom: dashed black;">
+              Últimas 5 personas vacunadas
+            </th>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: dashed black;">
+              <th>
+                Nombre
+              </th>
+              <th>
+                Vacuna
+              </th>
+              <th>
+                Dosis
+              </th>
+            </tr>
+            <tr *ngFor="let persona of ultimos">
+              <td>{{persona['name']}}</td>
+              <td>{{persona['vaccine_type']}}</td>
+              <td>{{persona['n_dose']}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-5" style="margin: 10px 0px;">
+      <!-- Gráfico circular del porcentaje de vacunados, una dosis, por departamentos, etc., en MongoDB -->
+      <div class="pie" id="chart3">
+        <apx-chart [title]="chartOptions1['title']" [series]="chartOptions1['series']" [chart]="chartOptions1['chart']"
+          [labels]="chartOptions1['labels']" [responsive]="chartOptions1['responsive']"
+          [plotOptions]="chartOptions1['plotOptions']"></apx-chart>
+      </div>
+    </div>
+    <div class="col-md-5" style="margin: 10px 0px;">
+      <!-- Gráfico circular del porcentaje de vacunados, esquema completo, por departamentos, etc., en MongoDB -->
+      <div class="pie" id="chart1">
+        <apx-chart [title]="chartOptions3['title']" [series]="chartOptions3['series']" [chart]="chartOptions3['chart']"
+          [labels]="chartOptions3['labels']" [responsive]="chartOptions3['responsive']"></apx-chart>
+      </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-10" style="margin: 10px 0px;">
+      <!-- Gráfico de barras de rango de edad de los vacunados en Redis -->
+      <div id="chart2">
+        <apx-chart [title]="chartOptions2['title']" [series]="chartOptions2['series']" [chart]="chartOptions2['chart']"
+          [dataLabels]="chartOptions2['dataLabels']" [plotOptions]="chartOptions2['plotOptions']"
+          [yaxis]="chartOptions2['yaxis']" [xaxis]="chartOptions2['xaxis']" [stroke]="chartOptions2['stroke']"
+          [grid]="chartOptions2['grid']" [fill]="chartOptions2['fill']"></apx-chart>
+      </div>
+    </div>
+    <div class="col-md-1">
+    </div>
+  </div>
 </div>
-
 <router-outlet></router-outlet>
