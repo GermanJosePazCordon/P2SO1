@@ -30,7 +30,7 @@ class readFile():
             print(f'Error : {Exception}')
 
 class trafficData(HttpUser):
-    wait_time = between(0.1, 0.9) #Tiempo de espera entre registros
+    #wait_time = between(0.1, 0.9) #Tiempo de espera entre registros
     reader = readFile()
     reader.loadFile()
 
@@ -43,7 +43,9 @@ class trafficData(HttpUser):
         if data is not None:
             send = json.dumps(data)
             printDebug(send)
-            self.client.post("/", json=data)
+            res = self.client.post("/", json=data)
+            response = res.json()
+            print(response)
         else:
             print("Empty") #No hay mas datos por enviar
             self.stop(True)
