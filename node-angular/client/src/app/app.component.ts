@@ -35,7 +35,7 @@ export class AppComponent {
     this.chartOptions1 = {
       series: this.completo_series,
       chart: {
-        //width: 450,
+        width: '100%',
         type: "pie",
         animations: {
           enabled: false
@@ -61,7 +61,7 @@ export class AppComponent {
     this.chartOptions3 = {
       series: this.una_series,
       chart: {
-        //width: 450,
+        width: '100%',
         type: "pie",
         animations: {
           enabled: false
