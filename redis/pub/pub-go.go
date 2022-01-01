@@ -13,7 +13,7 @@ import (
 )
 
 const (
-	url = "redis://miguelesdb@34.125.174.190:6379"
+	url = "redis://miguelesdb@34.68.95.85:6379"
 )
 
 func conectar_server(wri http.ResponseWriter, req *http.Request) {

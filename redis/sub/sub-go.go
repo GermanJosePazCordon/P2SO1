@@ -24,7 +24,7 @@ type Persona struct {
 }
 
 const (
-	url = "redis://miguelesdb@34.125.174.190:6379"
+	url = "redis://miguelesdb@34.68.95.85:6379"
 )
 
 func main() {
@@ -121,7 +121,7 @@ func guardar_data(data string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	mongoclient, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://miel:miguelesdb@34.125.174.190:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false"))
+	mongoclient, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://miel:miguelesdb@34.68.95.85:27017/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false"))
 	if err != nil {
 		log.Fatal(err)
 	}
