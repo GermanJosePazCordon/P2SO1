@@ -73,24 +73,24 @@ const consultaRedis = async () => {
 
 
 
-function consultaMongo(){
-    MongoClient.connect(url, function(err, db) {
-        if (err) throw err;
+const consultaMongo = async () =>{
+    const db = await MongoClient.connect(url) 
         var dbo = db.db("vacunadosData");
+        var nada;
         //CONSULTA 1
-        dbo.collection("vacunados").find('').toArray(function(err, result) {
+        nada = await dbo.collection("vacunados").find('').toArray(function(err, result) {
             if (err) throw err;
             consultas['con1'] = result
         });
         //CONSULTA 2
         var query = [{$match:{n_dose:2}},{$group:{_id:'$location', total:{$sum:1}}},{ $sort : { total : -1 } }]
-        dbo.collection("vacunados").aggregate(query).toArray(function(err, result) {
+        nada = await dbo.collection("vacunados").aggregate(query).toArray(function(err, result) {
           if (err) throw err;
           consultas['con2'] = result
         });
         //CONSULTA 3
         var query = [{$match:{n_dose:1}},{$group:{_id:'$location', total:{$sum:1}}}, { $sort : { total : -1 } }]
-        dbo.collection("vacunados").aggregate(query).toArray(function(err, result) {
+        nada = await dbo.collection("vacunados").aggregate(query).toArray(function(err, result) {
           if (err) throw err;
           consultas['con3'] = result
         });
@@ -100,12 +100,11 @@ function consultaMongo(){
             {$group:{_id:'$location', total:{$sum:1}}},
             { $sort : { total : -1 } }
             ]
-        dbo.collection("vacunados").aggregate(query).toArray(function(err, result) {
+            nada = await dbo.collection("vacunados").aggregate(query).toArray(function(err, result) {
           if (err) throw err;
           consultas['con4'] = result
           db.close()
         });
-    });
 }
 
 servidor.listen(4000, () => console.log('Server levantado en el puerto 4000'));
