@@ -1,3 +1,12 @@
+# Colaboradores
+-------
+### Integrantes
+|Nombre | Perfil |
+|-----|-----|
+|Mario Joue Solis Solorzano | https://github.com/SolisMario |
+|Jose Marcos Garcia Olmino | https://github.com/Marcos-gitHub24 |
+|German Jose Paz Cordon | https://github.com/GermanJosePazCordon |
+
 # Visualizador en tiempo real del porcentaje de vacunados COVID-19
 -------
 Arquitectura de sistema distribuida genérica que muestre
